@@ -1,15 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## The script consists of two functions, makeCacheMatrix, and cacheSolve.
+## makeCacheMatrix, the first function in the script, consists of set, get, setInverse, and getInverse.
+## This function also introduces an operator, "<<-".
 
-## Write a short comment describing this function
 
 makeCacheMatrix <- function(x = matrix()) {
-
+	i <- NULL
+	set <- function(y) {
+		x<<- y
+		i<<- NULL
+		}
+	get <- function() {x}
+	setInverse <-function(inverse) {i <<- inverse}
+	getInverse <- function() {i}
+	list(set = set, get = get, 
+	     setInverse = setInverse, getInverse = getInverse)
 }
 
 
-## Write a short comment describing this function
+## cacheSolve calculates for the inverse of the matrix, or returns an already cached solution for the inverse.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+	i <- x$getInverse()
+	if(!is.null(i)) {
+		message("retrieving cached data")
+		return(i)
+	}
+	mat <-x$get()
+	i <-solve(mat, ...)
+	x$setInverse(i)
+	i
+
+        ## The last part of the function returns the inverse.
 }
